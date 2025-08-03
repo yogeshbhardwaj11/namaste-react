@@ -43,3 +43,8 @@
     flex-wrap: wrap;
     /* justify-content: space-between; */
 }
+
+.filter{
+	display: flex;
+	margin-bottom: 20px;
+}
