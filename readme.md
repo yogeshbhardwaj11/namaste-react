@@ -19,4 +19,33 @@
 - Tree shaking
 - Different Dev and Prod bundles
 
+# Foof Ordering App
 
+/*
+* Header
+*   - logo
+*   - Nav Items
+* Body
+*   - search
+*   - Restaurant Container
+*       - Restaurant Card
+*           - Image
+*           - Name
+*           - Star ratings
+*           - Cuisine
+*           - Delivery Time
+*Footer
+*   - copyright	
+*/
+
+# two types of export/import
+
+- default import/export
+
+export default Component;
+import component from "path";
+
+- named import/export
+
+export const variable;
+import { variable } from "path";
