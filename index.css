@@ -15,15 +15,16 @@
 
 .nav-items > ul > li{
     list-style: none;
-    padding: 10px;
+    padding: 10px;	
     margin: 10px;
     font-size: 24px;
 }
 
-.restaurant-card{
-    padding: 5px;
-    width: 200px;
-}
+	.restaurant-card{
+			padding: 5px;
+			width: 200px;
+			margin:10px;
+	}
 
 .restaurant-card:hover{
     border: 1px solid black;
@@ -48,3 +49,68 @@
 	display: flex;
 	margin-bottom: 20px;
 }
+
+.restaurant-container > a{
+	text-decoration: none;
+	color: black;
+}
+
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.shimmer-card {
+  padding: 5px;
+  width: 200px;
+  margin: 10px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.shimmer-bg {
+  height: 150px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-lines {
+  padding: 10px;
+}
+
+.shimmer-line {
+  height: 12px;
+  background-color: #e0e0e0;
+  margin: 8px 0;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-line.short {
+  width: 60%;
+}
+
+/* The shimmer animation */
+.shimmer-bg::after,
+.shimmer-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150px;
+  height: 100%;
+  width: 150px;
+  background: linear-gradient(to right, transparent 0%, #ffffff66 50%, transparent 100%);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(300px);
+  }
+}
+

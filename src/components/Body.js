@@ -1,6 +1,8 @@
 import RestaurantCard from "./RestaurantCard";
 import { SWIGGY_API_ENDPOINT } from "../utils/constants";
 import { useState, useEffect } from "react";
+import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 // not using keys (not acceptable) >>>>> index as key >>>>> unique id (best practice)
 const Body = () => {
@@ -28,7 +30,7 @@ const Body = () => {
 	}
 
 	if (listOfRestaurants.length === 0){
-		return <h1>Loading...	</h1>;
+		return <Shimmer />;
 	}
 
 	return(
@@ -64,10 +66,13 @@ const Body = () => {
 			<div className="restaurant-container">
 				{
 					filteredRestaurants.map(restaurant => (
-						<RestaurantCard
-							key={restaurant.info.id}
-							restaurantData={restaurant.info}
-						/>
+						<Link
+							to={"/restaurants/"+ restaurant.info.id}
+							key={restaurant.info.id}>
+								<RestaurantCard
+									restaurantData={restaurant.info}
+								/>
+						</Link>
 					))
 				}	
 			</div>
