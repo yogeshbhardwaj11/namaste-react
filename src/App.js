@@ -1,23 +1,32 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import Header from './components/Header'
-import Body from './components/Body'
-import Footer from './components/Footer'
+import Header from "./components/Header";
+// import Body from './components/Body'
+import Footer from "./components/Footer";
 import About from "./components/About";
-import Contact from "./components/Contact";
+// import Contact from "./components/Contact";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Error from "./components/Error";
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+
+// chuncking
+// Code splitting
+// Dynamic Bundling
+// Lazy Loading
+// on demand loading
+
+const Body = lazy(() => import("./components/Body"));
+const Contact = lazy(() => import("./components/Contact"));
 
 const AppLayout = () => {
-    return (
-        <div className="app">
-            <Header />
-            <Outlet />
-            <Footer />
-        </div>
-    );
-}
+  return (
+    <div className="app">
+      <Header />
+      <Outlet />
+      <Footer />
+    </div>
+  );
+};
 
 const appRouter = createBrowserRouter([
   {
@@ -27,7 +36,11 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Body />,
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Body />
+          </Suspense>
+        ),
       },
       {
         path: "/about",
@@ -35,17 +48,19 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/contact",
-        element: <Contact />,
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Contact />
+          </Suspense>
+        ),
       },
       {
         path: "/restaurants/:resId",
         element: <RestaurantMenu />,
-      }
-    ]
+      },
+    ],
   },
 ]);
 
-
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter} />); 
+root.render(<RouterProvider router={appRouter} />);

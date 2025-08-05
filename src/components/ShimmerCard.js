@@ -10,4 +10,4 @@ const ShimmerCard = () => {
   );
 };
 
-export default ShimmerCard
+export default ShimmerCard;

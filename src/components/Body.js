@@ -1,83 +1,60 @@
-import RestaurantCard from "./RestaurantCard";
-import { SWIGGY_API_ENDPOINT } from "../utils/constants";
-import { useState, useEffect } from "react";
+import Filter from "./Filter";
+import RestaurantCardList from "./RestauranCardtList";
 import Shimmer from "./Shimmer";
-import { Link } from "react-router-dom";
+import useRestaurantList from "../utils/useRestaurantList";
+import useOnlineStatusTracker from "../utils/useOnlineStatusTracker";
+import { useState, useEffect } from "react";
 
 // not using keys (not acceptable) >>>>> index as key >>>>> unique id (best practice)
 const Body = () => {
-	const [listOfRestaurants, setListOfRestaurants] = useState([]);
-	const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-	const [searchText, setSearchText] = useState("");
+  const listOfRestaurants = useRestaurantList();
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const onlineStatus = useOnlineStatusTracker();
 
-	useEffect(
-		()=>{fetchData();},
-		[]
-	);
+  useEffect(() => {
+    if (searchText === "") {
+      setFilteredRestaurants(listOfRestaurants);
+    } else {
+      handleSearch();
+    }
+  }, [searchText, listOfRestaurants]);
 
-	const fetchData = async () => {
-		const data = await fetch(
-			SWIGGY_API_ENDPOINT
-		);
-		const json = await data.json();
+  const handleSearch = () => {
+    const filteredList = listOfRestaurants.filter((restaurant) => {
+      return restaurant?.info?.name
+        ?.toLowerCase()
+        .includes(searchText.toLowerCase());
+    });
+    setFilteredRestaurants(filteredList);
+  };
 
-		setListOfRestaurants(
-			json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants
-		)
-		setFilteredRestaurants(
-			json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants
-		)
-	}
+  const handleTopRatedFilter = () => {
+    const filteredList = listOfRestaurants.filter(
+      (restaurant) => restaurant.info.avgRating > 4.3
+    );
+    setFilteredRestaurants(filteredList);
+  };
 
-	if (listOfRestaurants.length === 0){
-		return <Shimmer />;
-	}
+  if (!onlineStatus) {
+    return <h1>You seems offline. Please check your internet connection.</h1>;
+  }
 
-	return(
-		<div className="body">
-			<div className="filter">
-				<div className="search">
-					<input type="text" className="searchBox" value={searchText} onChange={(e) => {
-						setSearchText(e.target.value);
-						console.log(e.target.value);
-					}} />
-					<button onClick={() => {
-						const filteredList =
-							listOfRestaurants.filter(
-								restaurant => {
-									return restaurant.info.name.toLowerCase().includes(searchText.toLowerCase());
-								}
-							);
-						setFilteredRestaurants(filteredList);
-					}}>Search</button>	
-				</div>
-				<button
-					className="filter-btn"
-					onClick= {() => {
-						const filteredList = listOfRestaurants.filter(
-							(restaurant) => restaurant.info.avgRating > 4.3
-						);
-						console.log(filteredList);
-						setFilteredRestaurants(filteredList);	
-					}}
-				>Top Rated Restaurants</button>
-			</div>
+  if (listOfRestaurants.length === 0) {
+    return <Shimmer />;
+  }
 
-			<div className="restaurant-container">
-				{
-					filteredRestaurants.map(restaurant => (
-						<Link
-							to={"/restaurants/"+ restaurant.info.id}
-							key={restaurant.info.id}>
-								<RestaurantCard
-									restaurantData={restaurant.info}
-								/>
-						</Link>
-					))
-				}	
-			</div>
-		</div>  
-	);
-}
+  return (
+    <div className="body">
+      <Filter
+        searchText={searchText}
+        setSearchText={setSearchText}
+        onSearch={handleSearch}
+        onFilter={handleTopRatedFilter}
+      />
+      <RestaurantCardList filteredRestaurants={filteredRestaurants} />
+    </div>
+  );
+};
 
 export default Body;
