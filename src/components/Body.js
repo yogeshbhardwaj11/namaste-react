@@ -15,8 +15,6 @@ const Body = () => {
   useEffect(() => {
     if (searchText === "") {
       setFilteredRestaurants(listOfRestaurants);
-    } else {
-      handleSearch();
     }
   }, [searchText, listOfRestaurants]);
 

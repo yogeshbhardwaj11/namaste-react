@@ -5,7 +5,7 @@ const RestaurantCardList = (props) => {
   const { filteredRestaurants } = props;
 
   return (
-    <div className="restaurant-container">
+    <div className="restaurant-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
       {filteredRestaurants.map((restaurant) => (
         <Link
           to={"/restaurants/" + restaurant.info.id}

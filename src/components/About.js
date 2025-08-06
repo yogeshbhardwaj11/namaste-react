@@ -11,8 +11,8 @@ class About extends React.Component {
 
   render() {
     return (
-      <div className="about">
-        <h1>About Us</h1>
+      <div className="about p-10">
+        <h1 className="mb-10">About Us</h1>
         <UserClass
           name="Yogesh Bhardwaj"
           location="Delhi NCR"
