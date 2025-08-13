@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withTopChoiceLabel } from "./RestaurantCard";
 
 const RestaurantCardList = (props) => {
   const { filteredRestaurants } = props;
-
+  const RestaurantCardTopChoice = withTopChoiceLabel(RestaurantCard);
+  console.log(filteredRestaurants);
   return (
     <div className="restaurant-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
       {filteredRestaurants.map((restaurant) => (
@@ -11,7 +12,11 @@ const RestaurantCardList = (props) => {
           to={"/restaurants/" + restaurant.info.id}
           key={restaurant.info.id}
         >
-          <RestaurantCard restaurantData={restaurant.info} />
+          {restaurant.info.avgRating >= 4.5 ? (
+            <RestaurantCardTopChoice restaurantData={restaurant.info} />
+          ) : (
+            <RestaurantCard restaurantData={restaurant.info} />
+          )}
         </Link>
       ))}
     </div>

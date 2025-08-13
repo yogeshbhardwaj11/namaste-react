@@ -1,4 +1,5 @@
 import React from "react";
+import UserContext from "../utils/UserContext";
 
 class UserClass extends React.Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class UserClass extends React.Component {
       "https://api.github.com/users/yogeshbhardwaj11"
     );
     const json = await userData.json();
-    console.log(json);
     this.setState({
       userInfo: json,
     });
@@ -36,6 +36,11 @@ class UserClass extends React.Component {
 
         <div className="p-4 flex flex-col justify-center">
           <h2 className="text-xl font-semibold text-gray-900">{name}</h2>
+          <UserContext.Consumer>
+            {({ userLoggedIn }) => (
+              <p className="text-sm text-gray-500">{userLoggedIn}</p>
+            )}
+          </UserContext.Consumer>
           <p className="text-sm text-gray-500">Full Stack Develper</p>
           <p className="text-sm text-gray-500">Delhi</p>
           <p className="mt-2 text-gray-600 text-sm">
