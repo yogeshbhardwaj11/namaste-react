@@ -49,3 +49,15 @@ import component from "path";
 
 export const variable;
 import { variable } from "path";
+
+# 2 types of Routes in web app
+- Client Side Routing
+- Server Side Routing
+
+# Redux Toolkit
+  - Install @reduxjs/toolkit and react-redux
+  - Build our store
+  - Connect our store to our app
+  - Slice (CartSlice)
+  - dispatch(action)
+  - Selector

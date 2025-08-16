@@ -6,9 +6,12 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 // import Contact from "./components/Contact";
 import RestaurantMenu from "./components/RestaurantMenu";
+import Cart from "./components/Cart";
 import Error from "./components/Error";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import UserContext from "./utils/UserContext";
+import appStore from "./utils/appStore";
+import { Provider } from "react-redux";
 
 // chuncking
 // Code splitting
@@ -22,15 +25,17 @@ const Contact = lazy(() => import("./components/Contact"));
 const AppLayout = () => {
   const [userName, setUserName] = useState("Yogesh Bhardwaj");
   return (
-    // Overriding of Context
-    // setUserName is shorthand here
-    <UserContext.Provider value={{ userLoggedIn: userName, setUserName }}>
-      <div className="app">
-        <Header />
-        <Outlet />
-        <Footer />
-      </div>
-    </UserContext.Provider>
+    <Provider store={appStore}>
+      {/* Overriding of Context */}
+      {/* setUserName is shorthand here */}
+      <UserContext.Provider value={{ userLoggedIn: userName, setUserName }}>
+        <div className="app">
+          <Header />
+          <Outlet />
+          <Footer />
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -64,6 +69,10 @@ const appRouter = createBrowserRouter([
         path: "/restaurants/:resId",
         element: <RestaurantMenu />,
       },
+      {
+        path: "/cart",
+        element: <Cart />,
+      }
     ],
   },
 ]);

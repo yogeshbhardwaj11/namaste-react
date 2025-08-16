@@ -17,7 +17,7 @@ const MenuCategory = (props) => {
           </span>
           <span>&#9660;</span>
         </div>
-        { showItems && <MenuCategoryItemList menuCategoryItems={itemCards} />}
+        { showItems && <MenuCategoryItemList items={itemCards.map((item)=> item.card.info  )} />}
       </div>
     </div>
   );

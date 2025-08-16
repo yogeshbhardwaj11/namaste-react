@@ -3,11 +3,20 @@ import { LOGO_URL } from "../utils/constants";
 import { useState, useContext } from "react";
 import useOnlineStatusTracker from "../utils/useOnlineStatusTracker";
 import UserContext from "../utils/UserContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [btnValue, setBtnValue] = useState("login");
   const onlineStatus = useOnlineStatusTracker();
   const {userLoggedIn} = useContext(UserContext);
+
+  //Subscribing to the store using selector
+  const cartItems = useSelector(
+    (store) => {
+      return store.cart.items
+    }
+  );
+
   return (
     <div className="flex align-middle shadow-lg bg-amber-50">
       <div className="w-[20%]">
@@ -25,7 +34,9 @@ const Header = () => {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
-          <li className="cursor-pointer">Cart</li>
+          <li className="cursor-pointer font-bold text-xl">
+            <Link to="/cart">Cart ({cartItems.length})</Link>
+          </li>
           <li>
             <button
               className="login cursor-pointer"

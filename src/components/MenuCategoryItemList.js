@@ -1,12 +1,12 @@
 import MenuCategoryItem, { withImageMenuItem } from "./MenuCategoryItem";
 
 const MenuCategoryItemList = (props) => {
-  const { menuCategoryItems } = props;
+  const { items } = props;
 
   return (
     <div>
-      {menuCategoryItems.map((item) => (
-          <MenuCategoryItem key={item?.card?.info?.id} item={item?.card?.info} />
+      {items.map((item) => (
+          <MenuCategoryItem key={item.id} item={item} />
       ))}
     </div>
   );
